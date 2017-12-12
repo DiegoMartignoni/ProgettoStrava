@@ -213,11 +213,12 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                 function upload() {
 
 
+                    // document.getElementById("datk").innerHTML =
                     document.write("<form enctype='multipart/form-data' action='http://mazzolenisimone.altervista.org/ProgettoStrava/gestionedati.php' method='POST'>"
                             //   + "<input type='hidden' name='MAX_FILE_SIZE' value='50000' />"
                             + "<label for='file' class='btn btn-default btn-file'> "
-                            + "Scegli file: <input type='file' name='filetraccia' id='filetraccia'/> </label>"
-                            + "<input type='submit' value='Carica File' onclick='location.reload();' /></form>");
+                            + "Scegli file: <input type='file' name='filetraccia' id='filetraccia'/> "
+                            + "<input type='submit' value='Carica File'/></label></form>");
 
 
                 }
@@ -260,22 +261,20 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                 <button type="button" class="die_" onclick="cercaatleta('koms')"> Premi per visionare i kom </button>
                 <button type="button" class="die_" onclick="upload()"> Premi per Caricare un file </button>
                 <?php
-                if (isset($_FILES['tracciagpx'])) {
+                if (isset($_FILES['filetraccia'])) {
                     /* echo ("<script>if ($('#fo1').length > 0)
                       {
                       $('#fo1').replaceWith(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
                       } else {
                       $('#fo1').append(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
                       }</script>"); */
-                    echo "Il file " . $_FILES['tracciagpx']['name'] . " è stato appena caricato";
+                    echo "Il file " . $_FILES['filetraccia']['name'] . " è stato appena caricato";
                 } else {
 
                     echo "file ancora no car";
                 }
-                define("UPLOADDIR", "./Upload/");
-
-            
-                    ?>
+                //  define("UPLOADDIR", "./Upload/");
+                ?>
 
             </center>
 

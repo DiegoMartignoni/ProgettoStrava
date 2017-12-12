@@ -97,33 +97,6 @@
             header("Location : gestionedati.php");
         }
 
-
-        /*
-          echo ("<script> $.ajax(
-          {
-          type: 'POST',
-          dataType: 'json',
-          url: 'https://www.strava.com/oauth/token',
-
-          data: {client_id: $clientid,  client_secret: '$clientsecret' ,code : '$code'
-          },
-
-          success: function (data) {
-
-
-          alert('eseguito');
-          var json = $.parseJSON(data);
-          alert(json.html);
-
-          },
-          error: function (data) {
-
-          alert('Fallito');
-          var json = $.parseJSON(data);
-          alert(json.error);
-          }
-          }
-          ); </script>"); */
         ?>
     </center>
 

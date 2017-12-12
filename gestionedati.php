@@ -14,6 +14,7 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
 //var_dump($arrayat['access_token']);
 ?>
 <!DOCTYPE html>
+
 <html>
     <head>
         <!--Librerie Bootstrap e Jquery -->
@@ -45,8 +46,8 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
             .die_ {
                 position : relative; 
 
-                top: 50%;
-                left: 40%; 
+                /*  top: 50%;
+                  left: 40%;*/ 
                 background: #3498db;
                 background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
                 background-image: -moz-linear-gradient(top, #3498db, #2980b9);
@@ -77,7 +78,7 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
         </style>    
 
     </head>
-    <body>
+    <body style="background-color : beige;">
         <div id="main" class="container-fluid">
             <?php
             $nome = $arrayat['athlete']['firstname'];
@@ -91,10 +92,6 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
             ?>
 
 
-
-            <button type="button" class="die_"  onclick="cercaatleta('stats')"> Premi per cercare informazioni atleta </button>
-
-            <button type="button" style="background-color: #ff0033"  onclick="cercaatleta('koms')"> Premi per visionare i kom </button>
 
 
             <script type="text/javascript" >
@@ -194,9 +191,9 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                         {
                             secondi = normalizzasec(arraydati[i].moving_time);
                             minuti = parseInt(arraydati[i].moving_time / 60);
-               console.log (minuti);
-                console.log(secondi);
-                            document.getElementById("tbl").innerHTML += "<tr><td>" + arraydati[i].name + "</td><td>" + minuti + ":"  + secondi+  "  Minuti</td></tr>"
+                            console.log(minuti);
+                            console.log(secondi);
+                            document.getElementById("tbl").innerHTML += "<tr><td>" + arraydati[i].name + "</td><td>" + minuti + ":" + secondi + "  Minuti</td></tr>"
 
                         }
 
@@ -205,8 +202,8 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                 function normalizzasec(tempo) {
                     var seconditot = parseInt(tempo);
                     var intminuti = parseInt(seconditot / 60);
-                    var floatminuti = seconditot/60;
-                    var secondi = (floatminuti % 1)*60;
+                    var floatminuti = seconditot / 60;
+                    var secondi = (floatminuti % 1) * 60;
                     return secondi.toFixed(0);
                 }
             </script>
@@ -243,7 +240,10 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
 
 
         <div class="navbar navbar-fixed-bottom" style=" border : 1px solid blue; background-color:wheat;" >
-            <center> Mazzoleni Simone </center>
+            <center>
+                <button type="button" class="die_"  onclick="cercaatleta('stats')"> Premi per cercare informazioni atleta </button>
+                <button type="button" class="die_" onclick="cercaatleta('koms')"> Premi per visionare i kom </button>
+            </center>
 
         </div>
 

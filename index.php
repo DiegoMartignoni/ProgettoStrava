@@ -40,8 +40,7 @@
         <?php
         $clientid = 21709;
         $publictoken = '7df4fe08602d6519c5df1851d19fc8b508f78bcb';
-        $clientsecret = file_get_contents("../secret.txt");
-        var_dump($clientsecret);
+        $clientsecret = '4feeb0fb15bb7b174f3abc9c8a6175d73bfb599b';
         $uri_red = 'http://mazzolenisimone.altervista.org/ProgettoStrava';
         $stato = 'provapi';
         ?>
@@ -88,7 +87,7 @@
 
             $_SESSION['clientid'] = $clientid;
             $_SESSION['publictoken'] = $publictoken;
-            $_SESSION['clientsecret'] = $clientid;
+            $_SESSION['clientsecret'] = $clientsecret;
             // var_dump($json_response);
             $arrayatleta = json_decode($json_response, true);
             var_dump($arrayatleta);

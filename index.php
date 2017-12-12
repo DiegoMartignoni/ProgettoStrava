@@ -12,7 +12,6 @@
     <body>
 
 
-
     <center>
         <div id='cosedafare' style='align-content: middle'>
 
@@ -41,7 +40,8 @@
         <?php
         $clientid = 21709;
         $publictoken = '7df4fe08602d6519c5df1851d19fc8b508f78bcb';
-        $clientsecret = '4feeb0fb15bb7b174f3abc9c8a6175d73bfb599b';
+        $clientsecret = file_get_contents("../secret.txt");
+        var_dump($clientsecret);
         $uri_red = 'http://mazzolenisimone.altervista.org/ProgettoStrava';
         $stato = 'provapi';
         ?>
@@ -76,7 +76,7 @@
             }
             $postData = rtrim($postData, '&');
             curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
-           
+
 
             $json_response = curl_exec($curl);
 

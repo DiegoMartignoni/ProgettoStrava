@@ -74,6 +74,7 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
 
                 /*margin : auto;
                 width : 100 px;*/
+
             }
         </style>    
 
@@ -206,6 +207,20 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                     var secondi = (floatminuti % 1) * 60;
                     return secondi.toFixed(0);
                 }
+
+
+
+                function upload() {
+
+
+                    document.write("<form enctype='multipart/form-data' action='http://mazzolenisimone.altervista.org/ProgettoStrava/gestionedati.php' method='POST'>"
+                            //   + "<input type='hidden' name='MAX_FILE_SIZE' value='50000' />"
+                            + "<label for='file' class='btn btn-default btn-file'> "
+                            + "Scegli file: <input type='file' name='filetraccia' id='filetraccia'/> </label>"
+                            + "<input type='submit' value='Carica File' onclick='location.reload();' /></form>");
+
+
+                }
             </script>
         </div>
 
@@ -243,6 +258,54 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
             <center>
                 <button type="button" class="die_"  onclick="cercaatleta('stats')"> Premi per cercare informazioni atleta </button>
                 <button type="button" class="die_" onclick="cercaatleta('koms')"> Premi per visionare i kom </button>
+                <button type="button" class="die_" onclick="upload()"> Premi per Caricare un file </button>
+                <?php
+                if (isset($_FILES['tracciagpx'])) {
+                    /* echo ("<script>if ($('#fo1').length > 0)
+                      {
+                      $('#fo1').replaceWith(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
+                      } else {
+                      $('#fo1').append(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
+                      }</script>"); */
+                    echo "Il file " . $_FILES['tracciagpx'] . " è stato appena caricato";
+                } else {
+
+                    echo "file ancora no car";
+
+
+                    define("UPLOAD_DIR", "/srv/www/uploads/");
+
+                    if (!empty($_FILES["myFile"])) {
+                        $myFile = $_FILES["myFile"];
+
+                        if ($myFile["error"] !== UPLOAD_ERR_OK) {
+                            echo "<p>An error occurred.</p>";
+                            exit;
+                        }
+
+                        // ensure a safe filename
+                        $name = preg_replace("/[^A-Z0-9._-]/i", "_", $myFile["name"]);
+
+                        // don't overwrite an existing file
+                        $i = 0;
+                        $parts = pathinfo($name);
+                        while (file_exists(UPLOAD_DIR . $name)) {
+                            $i++;
+                            $name = $parts["filename"] . "-" . $i . "." . $parts["extension"];
+                        }
+
+                        // preserve file from temporary directory
+                        $success = move_uploaded_file($myFile["tmp_name"], UPLOAD_DIR . $name);
+                        if (!$success) {
+                            echo "<p>Unable to save file.</p>";
+                            exit;
+                        }
+
+                        // set proper permissions on the new file
+                        chmod(UPLOAD_DIR . $name, 0644);
+                    }
+                    ?>
+
             </center>
 
         </div>

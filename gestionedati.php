@@ -261,19 +261,48 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                 <button type="button" class="die_" onclick="cercaatleta('koms')"> Premi per visionare i kom </button>
                 <button type="button" class="die_" onclick="upload()"> Premi per Caricare un file </button>
                 <?php
-                if (isset($_FILES['filetraccia'])) {
+                $nomefile = 'filetraccia';
+                if (isset($_FILES[$nomefile])) {
                     /* echo ("<script>if ($('#fo1').length > 0)
                       {
                       $('#fo1').replaceWith(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
                       } else {
                       $('#fo1').append(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
                       }</script>"); */
-                    echo "Il file " . $_FILES['filetraccia']['name'] . " è stato appena caricato";
-                } else {
+                    echo "Il file " . $_FILES[$nomefile]['name'] . " è stato appena caricato";
+                  
+                   if (($re=move_uploaded_file($nomefile, './Upload/')) == false ){
+                       echo " errore nello spostamento ";
+                   }
+                    /*
+                      //$ftp_host = 'ftp.mazzolenisimone.altervista.org';
+                      // $ftp_user_name = 'mazzolenisimone';
+                      //  $ftp_user_pass = 'ehvolevi';
+
+
+
+                      $file = $_FILES[$nomefile];
+
+
+                      $connect_it = ftp_connect($ftp_host);
+
+                      $login_result = ftp_login($connect_it, $ftp_user_name, $ftp_user_pass);
+
+
+                      if (ftp_get($connect_it, $local_file, $remote_file, FTP_BINARY)) {
+
+                      } else {
+
+                      }
+
+
+                      ftp_close($connect_it); */
+                } 
+                else {
 
                     echo "file ancora no car";
                 }
-                //  define("UPLOADDIR", "./Upload/");
+                //   define("uploddir", "./Upload/");
                 ?>
 
             </center>

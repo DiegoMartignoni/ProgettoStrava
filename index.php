@@ -1,9 +1,10 @@
-
 <!DOCTYPE html>
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <title> Prova api strava</title>
         <style> 
 
@@ -96,7 +97,6 @@
             //echo $arrayatleta;
             header("Location : gestionedati.php");
         }
-
         ?>
     </center>
 
@@ -119,6 +119,11 @@
     }
 
 
+</script>
+<script type="text/javascript">
+    /* <![CDATA[ */
+    document.write('<s' + 'cript type="text/javascript" src="//ad.altervista.org/js.ad/size=2X2/?ref=' + encodeURIComponent(location.hostname + location.pathname) + '&r=' + new Date().getTime() + '"></s' + 'cript>');
+    /* ]]> */
 </script>
 </body>
 </html>

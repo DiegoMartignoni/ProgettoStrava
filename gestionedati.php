@@ -21,7 +21,6 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <title> Gestione  </title>
@@ -262,45 +261,90 @@ $_SESSION['accesstoken'] = $arrayat['access_token'];
                 <button type="button" class="die_" onclick="upload()"> Premi per Caricare un file </button>
                 <?php
                 $nomefile = 'filetraccia';
+                //se è caricato
                 if (isset($_FILES[$nomefile])) {
-                    /* echo ("<script>if ($('#fo1').length > 0)
-                      {
-                      $('#fo1').replaceWith(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
-                      } else {
-                      $('#fo1').append(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
-                      }</script>"); */
-                    echo "Il file " . $_FILES[$nomefile]['name'] . " è stato appena caricato";
-                  
-                   if (($re=move_uploaded_file($nomefile, './Upload/')) == false ){
-                       echo " errore nello spostamento ";
-                   }
+
+                    $file_size = $_FILES[$nomefile]['size'];
+
+                    //se il file è maggiore di 0,9 mb non lo carico
+                    if ($file_size < '900000') {
+                        //tipo application/octet-stream
+                        $tipofile = $_FILES[$nomefile]['type'];
+                        if (!is_uploaded_file($_FILES[$nomefile]['tmp_name'])) {
+                            echo 'File non  caricato';
+                            exit;
+                        }
+
+                        /* echo ("<script>if ($('#fo1').length > 0)
+                          {
+                          $('#fo1').replaceWith(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
+                          } else {
+                          $('#fo1').append(<p> Il file " . $_FILES['tracciagpx'] . " è stato caricato</p>);
+                          }</script>"); */
+
+                        //move_uploaded_file($nomefile, '/Upload')) 
+                        //percorso della cartella dove mettere i file caricati dagli utenti
+                        $uploaddir = 'Upload/';
+                        $file_name = $_FILES[$nomefile]['name'];
+
+                        $file_tmp = $_FILES[$nomefile]['tmp_name'];
+
+                        if (move_uploaded_file($file_tmp, $uploaddir . $file_name)) {
+
+                            $formato = explode('.', $file_name);
+                            $formato = $formato[1];
+                            echo "Il file " . $_FILES[$nomefile]['name'] . " è stato appena caricato sul server ftp";
+                            //inizio l'uploading su strava
+                            $ch = curl_init();
+                            //set del array field
+                            $fields = [
+                                'activity_type' => "ride",
+                                // 'file' => new CURLFile($uploaddir, $tipofile),
+                                'file' => "@Upload/$file_name",
+                                'data_type' => $formato,
+                            ];
+
+                            //   var_dump($fields);
+
+                            curl_setopt($ch, CURLOPT_URL, "https://www.strava.com/api/v3/uploads");
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                            $headers = [
+                                'Authorization: Bearer ' . $_SESSION['accesstoken'],
+                                'Content-Type: Content-Type:multipart/form-data'
+                            ];
+                           
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                             echo (" header :" . curl_getinfo($ch,CURLINFO_REQUEST_SIZE ) . "<br><br>");
+                            $response = curl_exec($ch);
+                            $status = curl_getinfo($ch);
+                            if ($status != 200) {
+                                echo("Status :  " . var_dump($status) . " response del server<b> : $response </b>");
+                                // "header " . var_dump($headers) . " Campi post : " . var_dump($fields) .
+                            }
+                            curl_close($ch);
+                            //   var_dump($server_output);
+                        }
+                    } else {
+
+                        echo 'Upload NON valido!';
+                    }
                     /*
                       //$ftp_host = 'ftp.mazzolenisimone.altervista.org';
                       // $ftp_user_name = 'mazzolenisimone';
                       //  $ftp_user_pass = 'ehvolevi';
-
-
-
                       $file = $_FILES[$nomefile];
-
-
                       $connect_it = ftp_connect($ftp_host);
-
                       $login_result = ftp_login($connect_it, $ftp_user_name, $ftp_user_pass);
-
-
                       if (ftp_get($connect_it, $local_file, $remote_file, FTP_BINARY)) {
-
                       } else {
-
                       }
-
-
                       ftp_close($connect_it); */
-                } 
-                else {
+                } else {
 
-                    echo "file ancora no car";
+                    echo "<p id='statfil'>Nessun file in upload</p>";
                 }
                 //   define("uploddir", "./Upload/");
                 ?>
